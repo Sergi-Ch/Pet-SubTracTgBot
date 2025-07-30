@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/joho/godotenv"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 type Subscription struct {
@@ -27,7 +28,11 @@ var (
 
 func main() {
 	var err error
-	bot, err = tgbotapi.NewBotAPI("7275468201:AAGj7YiXAPmkzfJqbCn4anao3mnlJNk0Iqg")
+	err = godotenv.Load() // очень важно его в начале подгрузить
+	if err != nil {
+		log.Printf("err of load env file>> %v\n", err)
+	}
+	bot, err = tgbotapi.NewBotAPI(os.Getenv("YOUR_BOT_TOKEN"))
 	if err != nil {
 		log.Panic(err)
 	}
